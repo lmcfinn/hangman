@@ -1,49 +1,158 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>The Psychic Game</title>
+	<title>Hangman Game</title>
 </head>
 <body>
 
 
-<div class="container">
+		<h2 style="font-style: italic";>B*tch I'm Madonna!</h2>
+		<p>Guess what word it is! Hint: they are all from the title of a Madonna song. <p>
+		<p>Win: </p> <p id="win"></p>
+		<p>Current Word: </p> <p id="word"></p>
+		<p>Guesses Left: </p> <p id="left">10</p>
+		<p>Wrong guesses: </p> <p id="wrong" style="text-transform: capitalize;"></p>
+	
+	
 
-	<h1>Hangman Game</h1>
-
-	<p>Guess what the word is!</p>
 
 
+<script type="text/javascript">
+	
+	
+	function word() {
+
+		var words = ["prayer", "vogue", "preach", "material", "virgin", "grove", "music", "holiday"];
+
+		return words[Math.floor(Math.random() * words.length)];
+
+	}
+
+	var answer = word();
+	console.log("answer", answer);
+
+	
+	var userGuess = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z"];
+
+	var win = 0;
+
+	var remainingGuess = 10;
+
+	var answerArray = [];
+
+	var wrongArray = [];
+
+	var wrongGuess;
+
+
+	for( var i = 0; i <answer.length; i++) {
+
+		answerArray[i] = " _ ";
+	
+		document.querySelector("#word").innerHTML = answerArray.join("   ");
+
+     };
+
+
+ 	document.onkeyup = function(event){
+
+ 		userGuess = event.key.toLowerCase(); 
+ 		console.log("userGuess", userGuess);
+
+ 		remainingGuess--;
+
+ 		var isCorrect = false;
+
+ 		for( var j = 0; j < answer.length; j++) {
+
+ 			if ( answer[j] == userGuess ) {
+
+ 				answerArray[j] = userGuess;
+
+ 				document.querySelector("#word").innerHTML = answerArray.join(" ");
+
+ 				var isCorrect = true;
+
+ 			} 
+
+ 		}
+
+ 		if (isCorrect == false) {
+
+ 			wrongArray.push("  " + userGuess);
+ 			console.log("wrongGuess", userGuess);
+ 		}
+
+ 		if (answerArray.join("") == answer) {
+
+ 			win++;
+
+ 			document.querySelector("#win").innerHTML = win;
+
+ 			answer = word();
+ 			console.log("answer", answer);
+
+ 			wrongArray = [];
+
+ 			document.querySelector("#wrong").innerHTML = " ";
+
+ 			answerArray = [];
+
+ 			document.querySelector("#wrong").innerHTML = " ";
+
+ 			
+ 			for( var i = 0; i <answer.length; i++) {
+
+				answerArray[i] = " _ ";
+	
+				document.querySelector("#word").innerHTML = answerArray.join("   ");
+
+    		 };
+
+ 			remainingGuess = 10;
+
+ 		}
 
 
 
-</div>
+ 		if (remainingGuess == 0) {
 
-<script type="text/javascript"> 	
- 	
- 	var answer = ["madonna", "praryer", "vogue", "preach"];
+ 			answer = word();
+ 			console.log("answer", answer);
 
- 	function randomA() {
+ 			wrongArray = [];
 
- 		return answer[Math.floor(Math.random() * answer.length)]
- 	
- 	}
+ 			document.querySelector("#wrong").innerHTML = " ";
 
- 	var currentA = randomA();
- 		console.log("currentA", currentA);
+ 			answerArray = [];
 
- 	var userGuess = [];
- 	
- 	var wrongGuess = [];
+ 			document.querySelector("#wrong").innerHTML = " ";
 
- 	var correctArray = [];
+ 			
+ 			for( var i = 0; i <answer.length; i++) {
 
- 	correctArray.push(userGuess);
+				answerArray[i] = " _ ";
+	
+				document.querySelector("#word").innerHTML = answerArray.join("   ");
 
+    		 };
+
+ 			remainingGuess = 10;
+
+ 		}
+
+ 		
+ 		document.querySelector("#wrong").innerHTML = wrongArray;
+		document.querySelector("#left").innerHTML = remainingGuess;
+
+	};
 
 
 
 
 </script>
+
+
 
 </body>
 </html>
