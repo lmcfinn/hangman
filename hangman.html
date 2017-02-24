@@ -7,7 +7,7 @@
 
 
 		<h2 style="font-style: italic";>B*tch I'm Madonna!</h2>
-		<p>Guess what word it is! Hint: they are all from the title of a Madonna song. <p>
+		<p>Guess what word it is! Hint: They are all from the title of a Madonna song.<p>
 		<p>Win: </p> <p id="win"></p>
 		<p>Current Word: </p> <p id="word"></p>
 		<p>Guesses Left: </p> <p id="left">10</p>
@@ -22,18 +22,17 @@
 	
 	function word() {
 
-		var words = ["prayer", "vogue", "preach", "material", "virgin", "grove", "music", "holiday"];
+		var words = ["prayer", "vogue", "preach", "material", "virgin", "groove", "music", "holiday"];
 
 		return words[Math.floor(Math.random() * words.length)];
 
-	}
+	};
 
 	var answer = word();
 	console.log("answer", answer);
 
+	var allGuess = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z"];
 	
-	var userGuess = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z"];
-
 	var win = 0;
 
 	var remainingGuess = 10;
@@ -42,7 +41,8 @@
 
 	var wrongArray = [];
 
-	var wrongGuess;
+	var wrongKey = [];
+	console.log("wrongKey", wrongKey);
 
 
 	for( var i = 0; i <answer.length; i++) {
@@ -56,97 +56,106 @@
 
  	document.onkeyup = function(event){
 
- 		userGuess = event.key.toLowerCase(); 
- 		console.log("userGuess", userGuess);
 
- 		remainingGuess--;
+ 		userGuess = event.key.toLowerCase(); 
+ 		console.log("onKeyGuess", userGuess);
 
  		var isCorrect = false;
 
- 		for( var j = 0; j < answer.length; j++) {
 
- 			if ( answer[j] == userGuess ) {
+ 		if (allGuess.indexOf(userGuess) === -1) {
 
- 				answerArray[j] = userGuess;
+ 			alert("Alphabet only! Try again.");
 
- 				document.querySelector("#word").innerHTML = answerArray.join(" ");
+ 			wrongKey.push(userGuess);
 
- 				var isCorrect = true;
+ 		} else {
 
- 			} 
+ 			remainingGuess--;
 
- 		}
+ 			for( var j = 0; j < answer.length; j++) {
 
- 		if (isCorrect == false) {
+ 				if ( answer[j] == userGuess ) {
 
- 			wrongArray.push("  " + userGuess);
- 			console.log("wrongGuess", userGuess);
- 		}
+ 					answerArray[j] = userGuess;
 
- 		if (answerArray.join("") == answer) {
+ 					document.querySelector("#word").innerHTML = answerArray.join(" ");
 
- 			win++;
+ 					var isCorrect = true;
 
- 			document.querySelector("#win").innerHTML = win;
+ 				}; 
 
- 			answer = word();
- 			console.log("answer", answer);
-
- 			wrongArray = [];
-
- 			document.querySelector("#wrong").innerHTML = " ";
-
- 			answerArray = [];
-
- 			document.querySelector("#wrong").innerHTML = " ";
+ 			};
 
  			
- 			for( var i = 0; i <answer.length; i++) {
+ 			if (isCorrect == false) {
 
-				answerArray[i] = " _ ";
-	
-				document.querySelector("#word").innerHTML = answerArray.join("   ");
-
-    		 };
-
- 			remainingGuess = 10;
-
- 		}
-
-
-
- 		if (remainingGuess == 0) {
-
- 			answer = word();
- 			console.log("answer", answer);
-
- 			wrongArray = [];
-
- 			document.querySelector("#wrong").innerHTML = " ";
-
- 			answerArray = [];
-
- 			document.querySelector("#wrong").innerHTML = " ";
+ 				wrongArray.push("  " + userGuess);
+ 				console.log("wrongGuess", userGuess);
+ 			};
 
  			
- 			for( var i = 0; i <answer.length; i++) {
+ 			if (answerArray.join("") == answer) {
 
-				answerArray[i] = " _ ";
+ 				win++;
+
+ 				document.querySelector("#win").innerHTML = win;
+
+ 				answer = word();
+ 				console.log("answer", answer);
+
+ 				wrongArray = [];
+
+ 				document.querySelector("#wrong").innerHTML = " ";
+
+ 				answerArray = [];
+
+ 				document.querySelector("#wrong").innerHTML = " ";
+
+ 			
+ 				for( var i = 0; i <answer.length; i++) {
+
+					answerArray[i] = " _ ";
 	
-				document.querySelector("#word").innerHTML = answerArray.join("   ");
+					document.querySelector("#word").innerHTML = answerArray.join("   ");
 
-    		 };
+    		 	};
 
- 			remainingGuess = 10;
+ 				remainingGuess = 10;
 
- 		}
+ 			};
 
+
+ 			if (remainingGuess == 0) {
+
+ 				answer = word();
+ 				console.log("answer", answer);
+
+ 				wrongArray = [];
+
+ 				document.querySelector("#wrong").innerHTML = " ";
+
+ 				answerArray = [];
+
+ 				document.querySelector("#wrong").innerHTML = " ";
+
+ 			
+ 				for( var i = 0; i <answer.length; i++) {
+
+					answerArray[i] = " _ ";
+	
+					document.querySelector("#word").innerHTML = answerArray.join("   ");
+
+    		 	};
+
+ 				remainingGuess = 10;
+
+ 			};
  		
- 		document.querySelector("#wrong").innerHTML = wrongArray;
-		document.querySelector("#left").innerHTML = remainingGuess;
-
+ 			document.querySelector("#wrong").innerHTML = wrongArray;
+			document.querySelector("#left").innerHTML = remainingGuess;
+		};
 	};
-
 
 
 
